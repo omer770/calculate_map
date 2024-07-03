@@ -1,6 +1,5 @@
 import json
-def main():
-  pass
+import numpy as np
 
 class NumpyEncoder(json.JSONEncoder):
     """ Special json encoder for numpy types """
@@ -31,19 +30,19 @@ def print_structure(d, indent=0):
         print('  ' * indent + "[List of length {} containing:]".format(len(d)))
         if d:
             print_structure(d[0], indent+1)
-def create_json_object(json_file):
+          
+def retrive_json_object(json_file):
+  assert json_file.split('.')[-1] == 'json' , f"Provide a Json extention filename, provided-'{json_file}' "
   with open(json_file, 'r') as openfile:
     # Reading from json file
     json_object = json.load(openfile)
   return json_object
 
 def export_json_file(json_object,filename):
+  assert filename.split('.')[-1] == 'json' , f"Provide a Json extention filename, provided-'{filename}' "
   dumped = json.dumps(filename, cls=NumpyEncoder)
   with open(filename, 'a') as f:
       f.write(dumped + '\n')
   print("Saved- ",filename)
+  return filename
   
-
-
-if __name__ == "__main__":
-  main()
